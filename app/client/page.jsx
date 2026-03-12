@@ -13,7 +13,6 @@ const [type,setType] = useState("")
 const [concern,setConcern] = useState("")
 const [ticketID,setTicketID] = useState("")
 
-// AUTO DETECT DEVICE
 useEffect(()=>{
 
 const width = window.innerWidth
@@ -35,22 +34,14 @@ padding:"20px",
 fontFamily:"Arial"
 }}>
 
-<h1 style={{fontWeight:"500"}}>
-Client Assistance Portal
-</h1>
+<h1>Client Assistance Portal</h1>
 
-<p style={{color:"#777"}}>
-Device detected: {device}
-</p>
-
-{/* REQUEST TYPE */}
+<DeviceSelector device={device}/>
 
 <RequestType
 type={type}
 setType={setType}
 />
-
-{/* SHOW CONCERNS ONLY IF PROBLEM OR INQUIRY */}
 
 {(type === "problem" || type === "inquiry") && (
 
@@ -60,8 +51,6 @@ setConcern={setConcern}
 />
 
 )}
-
-{/* STATUS CHECK */}
 
 {type === "status" && (
 
@@ -74,8 +63,8 @@ placeholder="Enter Ticket ID"
 value={ticketID}
 onChange={(e)=>setTicketID(e.target.value)}
 style={{
-padding:"10px",
 width:"100%",
+padding:"10px",
 border:"1px solid #ccc",
 borderRadius:"6px"
 }}
@@ -86,9 +75,9 @@ style={{
 marginTop:"10px",
 padding:"10px",
 width:"100%",
-border:"none",
 background:"#111",
 color:"white",
+border:"none",
 borderRadius:"6px"
 }}
 >
@@ -98,8 +87,6 @@ Check Status
 </div>
 
 )}
-
-{/* SUMMARY */}
 
 {concern && (
 
