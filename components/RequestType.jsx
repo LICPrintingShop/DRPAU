@@ -1,20 +1,25 @@
-"use client"
+export default function RequestType({type,setType}){
 
-export default function RequestType({ type, setType }) {
+return(
 
-return (
-<div>
+<div style={{marginBottom:"20px"}}>
 
 <h3>Type of Request</h3>
 
-<button onClick={()=>setType("Problem")}>
-Problems
+<button onClick={()=>setType("problem")}>
+Problem
 </button>
 
-<button onClick={()=>setType("Inquiry")}>
+<button onClick={()=>setType("inquiry")} style={{marginLeft:"10px"}}>
 Inquiry
 </button>
 
+<button onClick={()=>setType("status")} style={{marginLeft:"10px"}}>
+Check Status
+</button>
+
 </div>
+
 )
+
 }
