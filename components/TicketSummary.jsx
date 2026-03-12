@@ -1,39 +1,41 @@
-"use client"
-
 export default function TicketSummary({device,type,concern}){
 
-async function submitTicket(){
-
-await fetch("/api/tickets",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-device,
-type,
-concern
-})
-})
-
-alert("Ticket Submitted")
-}
+const ticketID = "DRP-" + Math.floor(Math.random()*100000)
 
 return(
 
-<div>
+<div style={{
+marginTop:"30px",
+padding:"20px",
+border:"1px solid #ddd",
+borderRadius:"8px"
+}}>
 
-<h3>Summary</h3>
+<h3>Ticket Summary</h3>
 
-<p>Device: {device}</p>
-<p>Type: {type}</p>
-<p>Concern: {concern}</p>
+<p><b>Device:</b> {device}</p>
 
-<button onClick={submitTicket}>
+<p><b>Request Type:</b> {type}</p>
+
+<p><b>Concern:</b> {concern}</p>
+
+<p><b>Ticket ID:</b> {ticketID}</p>
+
+<button
+style={{
+marginTop:"10px",
+padding:"10px",
+background:"#111",
+color:"white",
+border:"none",
+borderRadius:"6px"
+}}
+>
 Submit Ticket
 </button>
 
 </div>
 
 )
+
 }
