@@ -1,18 +1,14 @@
-"use client"
-export default function DeviceSelector({ device, setDevice }) {
+export default function DeviceSelector({device}){
 
-return (
-<div>
-<h3>Device Used</h3>
+return(
 
-<button onClick={()=>setDevice("Phone")}>
-📱 Phone
-</button>
+<p style={{
+color:"#777",
+marginBottom:"20px"
+}}>
+Device detected: {device}
+</p>
 
-<button onClick={()=>setDevice("Desktop")}>
-💻 Desktop
-</button>
-
-</div>
 )
+
 }
