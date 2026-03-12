@@ -1,22 +1,68 @@
-"use client"
-import { concerns } from "../data/concerns"
+import { useState } from "react"
 
-export default function ConcernButtons({ concern, setConcern }) {
+export default function ConcernButtons({concern,setConcern}){
 
-return (
-<div>
+const [other,setOther] = useState("")
 
-<h3>Select Your Concern</h3>
+return(
 
-{concerns.map((c)=>(
-<button
-key={c}
-onClick={()=>setConcern(c)}
->
-{c}
+<div style={{marginTop:"20px"}}>
+
+<h3>Select your Concern</h3>
+
+<button onClick={()=>setConcern("COR - BIR")}>
+COR (Certificate of Registration)
 </button>
-))}
+
+<br/><br/>
+
+<button onClick={()=>setConcern("Receipt ATP")}>
+Receipt Need ATP
+</button>
+
+<br/><br/>
+
+<button onClick={()=>setConcern("Books of Account")}>
+Books of Account
+</button>
+
+<br/><br/>
+
+<button onClick={()=>setConcern("Mayor Permit")}>
+Mayor's Permit
+</button>
+
+<br/><br/>
+
+<button onClick={()=>setConcern("Withholding Tax 2307")}>
+Withholding Tax / 2307
+</button>
+
+<br/><br/>
+
+<h4>Others</h4>
+
+<input
+placeholder="Type your concern"
+value={other}
+onChange={(e)=>setOther(e.target.value)}
+style={{
+width:"100%",
+padding:"10px",
+border:"1px solid #ccc",
+borderRadius:"6px"
+}}
+/>
+
+<button
+onClick={()=>setConcern(other)}
+style={{marginTop:"10px"}}
+>
+Submit Other Concern
+</button>
 
 </div>
+
 )
+
 }
