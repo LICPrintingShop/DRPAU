@@ -1,0 +1,60 @@
+body{
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:#f5f5f5;
+}
+
+.container{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+.title{
+  font-size:32px;
+  font-weight:bold;
+  color:black;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+  margin-bottom:5px;
+}
+
+.subtitle{
+  font-size:14px;
+  color:#555;
+  margin-bottom:30px;
+}
+
+.branchGrid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center;
+  max-width:300px;
+}
+
+.branchBtn{
+  text-decoration:none;
+  background:white;
+  padding:14px 22px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:18px;
+  font-weight:bold;
+  color:black;
+  min-width:70px;
+  transition:all 0.2s ease;
+  box-shadow:0 2px 4px rgba(0,0,0,0.08);
+}
+
+.branchBtn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 12px rgba(0,0,0,0.15);
+}
+
+.branchBtn:active{
+  transform:scale(0.95);
+}
