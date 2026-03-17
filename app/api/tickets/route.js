@@ -1,30 +1,43 @@
-import { NextResponse } from "next/server";
-import { createTicket, getTickets } from "@/lib/ticket-service";
-import { validateTicketPayload } from "@/lib/validators";
+global.tickets = global.tickets || [];
 
-export async function GET() {
-  try {
-    const tickets = await getTickets();
-    return NextResponse.json({ tickets });
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to load tickets." },
-      { status: 500 }
-    );
-  }
+function makeTicketId() {
+  const random = Math.floor(100000 + Math.random() * 900000);
+  return `DRP-${random}`;
 }
 
-export async function POST(request) {
-  try {
-    const payload = await request.json();
-    const validated = validateTicketPayload(payload);
-    const ticket = await createTicket(validated);
+export async function GET() {
+  return Response.json({ tickets: global.tickets });
+}
 
-    return NextResponse.json({ ticket }, { status: 201 });
+export async function POST(req) {
+  try {
+    const body = await req.json();
+
+    if (!body.type) {
+      return Response.json({ error: "Request type is required" }, { status: 400 });
+    }
+
+    if (!body.concern) {
+      return Response.json({ error: "Concern is required" }, { status: 400 });
+    }
+
+    const ticket = {
+      ticketId: makeTicketId(),
+      name: body.name || "",
+      email: body.email || "",
+      branch: body.branch || "108",
+      type: body.type,
+      concern: body.concern,
+      details: body.details || "",
+      status: "Received",
+      remarks: "",
+      createdAt: new Date().toLocaleString()
+    };
+
+    global.tickets.unshift(ticket);
+
+    return Response.json({ ticket }, { status: 201 });
   } catch (error) {
-    return NextResponse.json(
-      { error: error.message || "Failed to create ticket." },
-      { status: 400 }
-    );
+    return Response.json({ error: "Failed to create ticket" }, { status: 500 });
   }
 }
