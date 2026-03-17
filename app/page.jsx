@@ -1,23 +1,45 @@
 import Link from "next/link";
 
+const branches = [83, 93, 97, 108, 115, 117, 118, 120];
+
 export default function Home() {
-
-  const branches = [83, 93, 97, 115, 117, 118, 120];
-
   return (
-    <div className="container">
+    <main className="page">
+      <section className="hero-card">
+        <p className="eyebrow">LIC PRINTING SHOP</p>
+        <h1>DR PAU Client Support System</h1>
+        <p className="subtext">
+          Submit concerns, track ticket progress, and manage updates in one
+          clean system.
+        </p>
 
-      <h1 className="title">LIC PRINTING SHOP</h1>
-      <p className="subtitle">DR PAU Branch Selection</p>
-
-      <div className="branchGrid">
-        {branches.map((branch) => (
-          <Link key={branch} href={`/client?branch=${branch}`} className="branchBtn">
-            {branch}
+        <div className="hero-actions">
+          <Link href="/client" className="primary-btn">
+            Create Ticket
           </Link>
-        ))}
-      </div>
+          <Link href="/track" className="secondary-btn">
+            Track Ticket
+          </Link>
+          <Link href="/admin" className="secondary-btn">
+            Admin Dashboard
+          </Link>
+        </div>
+      </section>
 
-    </div>
+      <section className="card">
+        <h2>Select Branch</h2>
+        <div className="branch-grid">
+          {branches.map((branch) => (
+            <Link
+              key={branch}
+              href={`/client?branch=${branch}`}
+              className="branch-card"
+            >
+              Branch {branch}
+            </Link>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
