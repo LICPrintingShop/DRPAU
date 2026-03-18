@@ -1,16 +1,23 @@
 import Link from "next/link";
 
-const branches = [83, 93, 97, 108, 115, 117, 118, 120];
-
 export default function Home() {
   return (
-    <main className="page">
-      <section className="hero-card">
-        <p className="eyebrow">LIC PRINTING SHOP</p>
-        <h1>DR PAU Client Support System</h1>
-        <p className="subtext">
-          Submit concerns, track ticket progress, and manage updates in one
-          clean system.
+    <main className="landing-page">
+      <div className="bg-orb orb-one" />
+      <div className="bg-orb orb-two" />
+      <div className="bg-grid" />
+
+      <section className="landing-hero">
+        <div className="hero-badge">LIC PRINTING SHOP</div>
+
+        <h1 className="hero-title">
+          DR PAU
+          <span> Client Support System</span>
+        </h1>
+
+        <p className="hero-text">
+          A clean and modern way to submit concerns, track requests, and manage
+          client support across branches.
         </p>
 
         <div className="hero-actions">
@@ -26,18 +33,32 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="card">
-        <h2>Select Branch</h2>
-        <div className="branch-grid">
-          {branches.map((branch) => (
-            <Link
-              key={branch}
-              href={`/client?branch=${branch}`}
-              className="branch-card"
-            >
-              Branch {branch}
-            </Link>
-          ))}
+      <section className="floating-panels">
+        <div className="info-card float-slow">
+          <p className="info-label">Support</p>
+          <h3>Fast Request Submission</h3>
+          <p>
+            Clients can submit concerns quickly with structured address and
+            contact details.
+          </p>
+        </div>
+
+        <div className="info-card float-delay">
+          <p className="info-label">Tracking</p>
+          <h3>Real-Time Ticket Lookup</h3>
+          <p>
+            Check status updates, routing progress, and remarks using a ticket
+            ID.
+          </p>
+        </div>
+
+        <div className="info-card float-fast">
+          <p className="info-label">Admin</p>
+          <h3>Manual Branch Review</h3>
+          <p>
+            Employees can search, review, and assign the correct branch based on
+            actual handling.
+          </p>
         </div>
       </section>
     </main>
