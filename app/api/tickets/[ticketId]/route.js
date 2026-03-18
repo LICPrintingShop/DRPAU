@@ -27,7 +27,8 @@ export async function PATCH(req, { params }) {
     global.tickets[ticketIndex] = {
       ...global.tickets[ticketIndex],
       status: body.status || global.tickets[ticketIndex].status,
-      remarks: body.remarks || global.tickets[ticketIndex].remarks
+      remarks: body.remarks || global.tickets[ticketIndex].remarks,
+      branch: body.branch || global.tickets[ticketIndex].branch,
     };
 
     return Response.json({ ticket: global.tickets[ticketIndex] });
