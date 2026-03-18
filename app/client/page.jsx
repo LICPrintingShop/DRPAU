@@ -1,19 +1,18 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import TicketForm from "../../components/TicketForm";
 
 export default function ClientPage() {
-  const searchParams = useSearchParams();
-  const branch = searchParams.get("branch") || "108";
-
   return (
-    <main className="page">
-      <section className="card">
-        <p className="eyebrow">CLIENT PORTAL</p>
-        <h1>Create a Support Ticket</h1>
-        <p className="subtext">Selected Branch: {branch}</p>
-        <TicketForm branch={branch} />
+    <main className="page-container">
+      <section className="glass-panel">
+        <p className="section-kicker">CLIENT PORTAL</p>
+        <h2>Create a Support Ticket</h2>
+        <p className="subtext">
+          Fill out the form below and your request will be reviewed by the team.
+        </p>
+
+        <TicketForm />
       </section>
     </main>
   );
