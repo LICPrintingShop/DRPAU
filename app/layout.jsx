@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "DR PAU Client Support System",
-  description: "Minimalist glass client support system"
+  description: "Minimalist glass client support system",
 };
 
 export default function RootLayout({ children }) {
@@ -28,18 +28,10 @@ export default function RootLayout({ children }) {
             </Link>
 
             <div className="nav-links">
-              <Link href="/" className="nav-link">
-                Home
-              </Link>
-              <Link href="/client" className="nav-link">
-                Create Ticket
-              </Link>
-              <Link href="/track" className="nav-link">
-                Track
-              </Link>
-              <Link href="/admin" className="nav-link">
-                Admin
-              </Link>
+              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/client" className="nav-link">Create Ticket</Link>
+              <Link href="/track" className="nav-link">Track</Link>
+              <Link href="/admin" className="nav-link">Admin</Link>
             </div>
           </nav>
         </header>
