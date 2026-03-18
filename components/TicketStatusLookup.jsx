@@ -34,12 +34,12 @@ export default function TicketStatusLookup() {
     <>
       <form onSubmit={lookupTicket} className="form-inline">
         <input
-          className="input"
+          className="glass-input"
           placeholder="Enter ticket ID"
           value={ticketId}
           onChange={(e) => setTicketId(e.target.value)}
         />
-        <button className="primary-btn" type="submit">
+        <button className="btn-primary" type="submit">
           {loading ? "Checking..." : "Check Status"}
         </button>
       </form>
@@ -47,7 +47,7 @@ export default function TicketStatusLookup() {
       {error ? <p className="error-text">{error}</p> : null}
 
       {ticket ? (
-        <div className="result-card">
+        <div className="glass-panel" style={{ marginTop: 16 }}>
           <h2>{ticket.ticketId}</h2>
           <p><strong>Status:</strong> {ticket.status}</p>
           <p><strong>Branch:</strong> {ticket.branch}</p>
