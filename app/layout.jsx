@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "DR PAU Client Support System",
-  description: "Minimalist glass client support system",
+  description: "Glass support system",
 };
 
 export default function RootLayout({ children }) {
