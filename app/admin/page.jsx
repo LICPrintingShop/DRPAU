@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import AdminTicketTable from "../../components/AdminTicketTable";
 
 export default function AdminPage() {
@@ -8,10 +8,14 @@ export default function AdminPage() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
-  async function loadTickets() {
+  async function loadTickets(search = "") {
     setLoading(true);
     try {
-      const res = await fetch("/api/tickets");
+      const url = search
+        ? `/api/tickets?q=${encodeURIComponent(search)}`
+        : "/api/tickets";
+
+      const res = await fetch(url);
       const data = await res.json();
       setTickets(data.tickets || []);
     } catch (error) {
@@ -22,42 +26,30 @@ export default function AdminPage() {
     }
   }
 
+  async function handleLogout() {
+    await fetch("/api/admin/logout", { method: "POST" });
+    window.location.href = "/admin-login";
+  }
+
   useEffect(() => {
-    loadTickets();
-  }, []);
-
-  const filteredTickets = useMemo(() => {
-    const q = query.toLowerCase();
-
-    return tickets.filter((ticket) => {
-      const text = `
-        ${ticket.ticketId || ""}
-        ${ticket.branch || ""}
-        ${ticket.type || ""}
-        ${ticket.concern || ""}
-        ${ticket.status || ""}
-        ${ticket.email || ""}
-        ${ticket.contactPerson || ""}
-        ${ticket.contactNumber || ""}
-        ${ticket.region || ""}
-        ${ticket.province || ""}
-        ${ticket.city || ""}
-        ${ticket.barangay || ""}
-        ${ticket.manualAddress || ""}
-      `.toLowerCase();
-
-      return text.includes(q);
-    });
-  }, [tickets, query]);
+    loadTickets(query);
+  }, [query]);
 
   return (
     <main className="page-container">
       <section className="glass-panel">
         <p className="section-kicker">ADMIN</p>
         <h2>Ticket Dashboard</h2>
-        <p className="subtext">
-          Search and review tickets before assigning the correct branch.
-        </p>
+
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 16 }}>
+          <p className="subtext" style={{ margin: 0 }}>
+            Search and review tickets before assigning the correct branch.
+          </p>
+
+          <button className="btn-secondary" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
 
         <input
           className="glass-input"
@@ -71,7 +63,7 @@ export default function AdminPage() {
         {loading ? (
           <p className="subtext">Loading tickets...</p>
         ) : (
-          <AdminTicketTable tickets={filteredTickets} onRefresh={loadTickets} />
+          <AdminTicketTable tickets={tickets} onRefresh={() => loadTickets(query)} />
         )}
       </section>
     </main>
