@@ -7,7 +7,7 @@ const statuses = [
   "For Checking",
   "Processing",
   "Ready for Release",
-  "Completed",
+  "Completed"
 ];
 
 export default function AdminTicketTable({ tickets, onRefresh }) {
@@ -20,9 +20,9 @@ export default function AdminTicketTable({ tickets, onRefresh }) {
       await fetch(`/api/tickets/${ticketId}`, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status, remarks, branch }),
+        body: JSON.stringify({ status, remarks, branch })
       });
 
       await onRefresh();
