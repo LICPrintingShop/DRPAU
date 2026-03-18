@@ -8,15 +8,15 @@ const concernOptions = {
     "Wrong details on print",
     "Missing booklet",
     "Duplicate release issue",
-    "Other printing issue"
+    "Other printing issue",
   ],
   inquiry: [
     "Order status inquiry",
     "Claiming schedule",
     "Requirements inquiry",
     "Price inquiry",
-    "Other inquiry"
-  ]
+    "Other inquiry",
+  ],
 };
 
 const addressData = {
@@ -24,30 +24,30 @@ const addressData = {
     "Metro Manila": {
       Manila: ["Barangay 1", "Barangay 2"],
       "Quezon City": ["Bagumbayan", "Commonwealth"],
-      Pasig: ["San Antonio", "Ugong"]
-    }
+      Pasig: ["San Antonio", "Ugong"],
+    },
   },
   "Region IV-A": {
     Rizal: {
       Antipolo: ["San Jose", "Dela Paz"],
       Taytay: ["Dolores", "San Juan"],
-      Cainta: ["San Andres", "Sto. Domingo"]
+      Cainta: ["San Andres", "Sto. Domingo"],
     },
     Laguna: {
       Calamba: ["Real", "Canlubang"],
-      "Santa Rosa": ["Balibago", "Tagapo"]
+      "Santa Rosa": ["Balibago", "Tagapo"],
     },
     Cavite: {
       Imus: ["Alapan", "Bucandala"],
-      Bacoor: ["Molino 1", "Talaba"]
-    }
+      Bacoor: ["Molino 1", "Talaba"],
+    },
   },
   "Region III": {
     Bulacan: {
       Malolos: ["Santo Rosario", "San Pablo"],
-      Meycauayan: ["Camalig", "Perez"]
-    }
-  }
+      Meycauayan: ["Camalig", "Perez"],
+    },
+  },
 };
 
 export default function TicketForm() {
@@ -74,12 +74,9 @@ export default function TicketForm() {
   const concerns = useMemo(() => concernOptions[type] || [], [type]);
 
   const regionOptions = Object.keys(addressData);
-
   const provinceOptions = region ? Object.keys(addressData[region] || {}) : [];
-
   const cityOptions =
     region && province ? Object.keys(addressData[region]?.[province] || {}) : [];
-
   const barangayOptions =
     region && province && city
       ? addressData[region]?.[province]?.[city] || []
@@ -94,7 +91,7 @@ export default function TicketForm() {
       const res = await fetch("/api/tickets", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name,
@@ -109,8 +106,8 @@ export default function TicketForm() {
           manualAddress,
           type,
           concern,
-          details
-        })
+          details,
+        }),
       });
 
       const data = await res.json();
@@ -133,18 +130,10 @@ export default function TicketForm() {
         <h2>Ticket Submitted</h2>
         <p className="subtext">Your request has been received.</p>
         <div className="ticket-box">{ticket.ticketId}</div>
-        <p>
-          <strong>Status:</strong> {ticket.status}
-        </p>
-        <p>
-          <strong>Branch Status:</strong> {ticket.branch}
-        </p>
-        <p>
-          <strong>Contact Person:</strong> {ticket.contactPerson}
-        </p>
-        <p>
-          <strong>Contact Number:</strong> {ticket.contactNumber}
-        </p>
+        <p><strong>Status:</strong> {ticket.status}</p>
+        <p><strong>Branch Status:</strong> {ticket.branch}</p>
+        <p><strong>Contact Person:</strong> {ticket.contactPerson}</p>
+        <p><strong>Contact Number:</strong> {ticket.contactNumber}</p>
       </div>
     );
   }
