@@ -16,6 +16,7 @@ export default function AdminPage() {
       setTickets(data.tickets || []);
     } catch (error) {
       console.error(error);
+      setTickets([]);
     } finally {
       setLoading(false);
     }
@@ -26,24 +27,46 @@ export default function AdminPage() {
   }, []);
 
   const filteredTickets = useMemo(() => {
+    const q = query.toLowerCase();
+
     return tickets.filter((ticket) => {
-      const text = `${ticket.ticketId} ${ticket.branch} ${ticket.type} ${ticket.concern} ${ticket.status} ${ticket.email || ""}`.toLowerCase();
-      return text.includes(query.toLowerCase());
+      const text = `
+        ${ticket.ticketId || ""}
+        ${ticket.branch || ""}
+        ${ticket.type || ""}
+        ${ticket.concern || ""}
+        ${ticket.status || ""}
+        ${ticket.email || ""}
+        ${ticket.contactPerson || ""}
+        ${ticket.contactNumber || ""}
+        ${ticket.region || ""}
+        ${ticket.province || ""}
+        ${ticket.city || ""}
+        ${ticket.barangay || ""}
+        ${ticket.manualAddress || ""}
+      `.toLowerCase();
+
+      return text.includes(q);
     });
   }, [tickets, query]);
 
   return (
-    <main className="page">
-      <section className="card">
-        <p className="eyebrow">ADMIN</p>
-        <h1>Ticket Dashboard</h1>
+    <main className="page-container">
+      <section className="glass-panel">
+        <p className="section-kicker">ADMIN</p>
+        <h2>Ticket Dashboard</h2>
+        <p className="subtext">
+          Search and review tickets before assigning the correct branch.
+        </p>
 
         <input
-          className="input"
-          placeholder="Search ticket ID, status, concern, email..."
+          className="glass-input"
+          placeholder="Search ticket ID, contact, address, concern..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
+
+        <div style={{ height: 16 }} />
 
         {loading ? (
           <p className="subtext">Loading tickets...</p>
