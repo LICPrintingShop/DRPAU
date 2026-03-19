@@ -3,7 +3,7 @@ import {
   createSessionToken,
   getAdminCookieName,
   getSessionCookieOptions,
-  isValidAdminLogin
+  isValidAdminLogin,
 } from "@/lib/auth";
 
 export async function POST(req) {
