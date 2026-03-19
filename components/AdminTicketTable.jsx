@@ -7,7 +7,7 @@ const statuses = [
   "For Checking",
   "Processing",
   "Ready for Release",
-  "Completed"
+  "Completed",
 ];
 
 export default function AdminTicketTable({ tickets, onRefresh }) {
@@ -15,16 +15,12 @@ export default function AdminTicketTable({ tickets, onRefresh }) {
 
   async function updateTicket(ticketId, status, remarks, branch) {
     setSavingId(ticketId);
-
     try {
       await fetch(`/api/tickets/${ticketId}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ status, remarks, branch })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, remarks, branch }),
       });
-
       await onRefresh();
     } catch (error) {
       console.error(error);
@@ -77,9 +73,7 @@ function TicketRow({ ticket, statuses, onSave, saving }) {
 
   const address =
     ticket.addressMode === "dropdown"
-      ? [ticket.region, ticket.province, ticket.city, ticket.barangay]
-          .filter(Boolean)
-          .join(", ")
+      ? [ticket.region, ticket.province, ticket.city, ticket.barangay].filter(Boolean).join(", ")
       : ticket.manualAddress || "-";
 
   return (
@@ -89,41 +83,20 @@ function TicketRow({ ticket, statuses, onSave, saving }) {
       <td>{ticket.contactNumber || "-"}</td>
       <td>{address}</td>
       <td>
-        <input
-          className="table-input"
-          value={branch}
-          onChange={(e) => setBranch(e.target.value)}
-          placeholder="Assign branch"
-        />
+        <input className="table-input" value={branch} onChange={(e) => setBranch(e.target.value)} />
       </td>
       <td>{ticket.type}</td>
       <td>{ticket.concern}</td>
       <td>
-        <select
-          className="table-input"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-        >
-          {statuses.map((item) => (
-            <option key={item} value={item}>
-              {item}
-            </option>
-          ))}
+        <select className="table-input" value={status} onChange={(e) => setStatus(e.target.value)}>
+          {statuses.map((item) => <option key={item} value={item}>{item}</option>)}
         </select>
       </td>
       <td>
-        <input
-          className="table-input"
-          value={remarks}
-          onChange={(e) => setRemarks(e.target.value)}
-          placeholder="Add remarks"
-        />
+        <input className="table-input" value={remarks} onChange={(e) => setRemarks(e.target.value)} />
       </td>
       <td>
-        <button
-          className="btn-secondary"
-          onClick={() => onSave(ticket.ticketId, status, remarks, branch)}
-        >
+        <button className="btn-secondary" onClick={() => onSave(ticket.ticketId, status, remarks, branch)}>
           {saving ? "Saving..." : "Save"}
         </button>
       </td>
