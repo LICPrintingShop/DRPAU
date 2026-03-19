@@ -17,11 +17,7 @@ export default function TicketStatusLookup() {
     try {
       const res = await fetch(`/api/tickets/${ticketId}`);
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Ticket not found");
-      }
-
+      if (!res.ok) throw new Error(data.error || "Ticket not found");
       setTicket(data.ticket);
     } catch (err) {
       setError(err.message);
