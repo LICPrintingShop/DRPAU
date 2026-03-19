@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "DR PAU Client Support System",
-  description: "Glass support system",
+  description: "Client support and tracking system",
 };
 
 export default function RootLayout({ children }) {
@@ -14,7 +14,6 @@ export default function RootLayout({ children }) {
           <div className="bg-orb orb-a" />
           <div className="bg-orb orb-b" />
           <div className="bg-orb orb-c" />
-          <div className="bg-mesh" />
         </div>
 
         <header className="site-header">
@@ -36,7 +35,7 @@ export default function RootLayout({ children }) {
           </nav>
         </header>
 
-        <div className="page-shell">{children}</div>
+        <main className="page-shell">{children}</main>
       </body>
     </html>
   );
