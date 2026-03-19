@@ -21,7 +21,7 @@ function formatTicketRow(row) {
     details: row.details,
     status: row.status,
     remarks: row.remarks,
-    createdAt: row.created_at
+    createdAt: row.created_at,
   };
 }
 
@@ -30,8 +30,7 @@ export async function GET(req, { params }) {
     await createTicketsTable();
 
     const result = await sql`
-      SELECT *
-      FROM tickets
+      SELECT * FROM tickets
       WHERE ticket_id = ${params.ticketId}
       LIMIT 1
     `;
@@ -56,16 +55,7 @@ export async function PATCH(req, { params }) {
     }
 
     await createTicketsTable();
-
     const body = await req.json();
-
-    const existing = await sql`
-      SELECT 1 FROM tickets WHERE ticket_id = ${params.ticketId} LIMIT 1
-    `;
-
-    if (existing.rows.length === 0) {
-      return Response.json({ error: "Ticket not found" }, { status: 404 });
-    }
 
     const updated = await sql`
       UPDATE tickets
@@ -77,6 +67,10 @@ export async function PATCH(req, { params }) {
       WHERE ticket_id = ${params.ticketId}
       RETURNING *
     `;
+
+    if (updated.rows.length === 0) {
+      return Response.json({ error: "Ticket not found" }, { status: 404 });
+    }
 
     return Response.json({ ticket: formatTicketRow(updated.rows[0]) });
   } catch {
