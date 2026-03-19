@@ -36,16 +36,13 @@ export default function AdminPage() {
   }, [query]);
 
   return (
-    <main className="page-container">
+    <div className="page-container">
       <section className="glass-panel">
         <p className="section-kicker">ADMIN</p>
         <h2>Ticket Dashboard</h2>
 
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 16 }}>
-          <p className="subtext" style={{ margin: 0 }}>
-            Search and review tickets before assigning the correct branch.
-          </p>
-
+        <div className="toolbar">
+          <p className="subtext">Search and review tickets.</p>
           <button className="btn-secondary" onClick={handleLogout}>
             Logout
           </button>
@@ -53,7 +50,7 @@ export default function AdminPage() {
 
         <input
           className="glass-input"
-          placeholder="Search ticket ID, contact, address, concern..."
+          placeholder="Search ticket, contact, address..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -66,6 +63,6 @@ export default function AdminPage() {
           <AdminTicketTable tickets={tickets} onRefresh={() => loadTickets(query)} />
         )}
       </section>
-    </main>
+    </div>
   );
 }
