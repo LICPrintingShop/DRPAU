@@ -24,7 +24,7 @@ function formatTicketRow(row) {
     details: row.details,
     status: row.status,
     remarks: row.remarks,
-    createdAt: row.created_at
+    createdAt: row.created_at,
   };
 }
 
@@ -37,10 +37,8 @@ export async function GET(request) {
 
     if (q) {
       const like = `%${q}%`;
-
       const result = await sql`
-        SELECT *
-        FROM tickets
+        SELECT * FROM tickets
         WHERE
           ticket_id ILIKE ${like}
           OR COALESCE(contact_person, '') ILIKE ${like}
@@ -56,21 +54,14 @@ export async function GET(request) {
           OR COALESCE(status, '') ILIKE ${like}
         ORDER BY created_at DESC
       `;
-
-      return Response.json({
-        tickets: result.rows.map(formatTicketRow)
-      });
+      return Response.json({ tickets: result.rows.map(formatTicketRow) });
     }
 
     const result = await sql`
-      SELECT *
-      FROM tickets
+      SELECT * FROM tickets
       ORDER BY created_at DESC
     `;
-
-    return Response.json({
-      tickets: result.rows.map(formatTicketRow)
-    });
+    return Response.json({ tickets: result.rows.map(formatTicketRow) });
   } catch {
     return Response.json({ error: "Failed to load tickets." }, { status: 500 });
   }
@@ -85,65 +76,29 @@ export async function POST(req) {
     if (!body.contactPerson) {
       return Response.json({ error: "Contact person is required" }, { status: 400 });
     }
-
     if (!body.contactNumber) {
       return Response.json({ error: "Contact number is required" }, { status: 400 });
     }
-
     if (!body.type) {
       return Response.json({ error: "Request type is required" }, { status: 400 });
     }
-
     if (!body.concern) {
       return Response.json({ error: "Concern is required" }, { status: 400 });
     }
-
-    if (
-      body.addressMode === "dropdown" &&
-      (!body.region || !body.province || !body.city)
-    ) {
-      return Response.json(
-        { error: "Please complete the dropdown address" },
-        { status: 400 }
-      );
+    if (body.addressMode === "dropdown" && (!body.region || !body.province || !body.city)) {
+      return Response.json({ error: "Please complete the dropdown address" }, { status: 400 });
     }
-
     if (body.addressMode === "manual" && !body.manualAddress) {
-      return Response.json(
-        { error: "Manual address is required" },
-        { status: 400 }
-      );
+      return Response.json({ error: "Manual address is required" }, { status: 400 });
     }
 
     let ticketId = makeTicketId();
 
-    for (let i = 0; i < 5; i++) {
-      const exists = await sql`
-        SELECT 1 FROM tickets WHERE ticket_id = ${ticketId} LIMIT 1
-      `;
-      if (exists.rows.length === 0) break;
-      ticketId = makeTicketId();
-    }
-
     const inserted = await sql`
       INSERT INTO tickets (
-        ticket_id,
-        name,
-        email,
-        contact_person,
-        contact_number,
-        address_mode,
-        region,
-        province,
-        city,
-        barangay,
-        manual_address,
-        branch,
-        type,
-        concern,
-        details,
-        status,
-        remarks
+        ticket_id, name, email, contact_person, contact_number,
+        address_mode, region, province, city, barangay, manual_address,
+        branch, type, concern, details, status, remarks
       )
       VALUES (
         ${ticketId},
@@ -167,10 +122,7 @@ export async function POST(req) {
       RETURNING *
     `;
 
-    return Response.json(
-      { ticket: formatTicketRow(inserted.rows[0]) },
-      { status: 201 }
-    );
+    return Response.json({ ticket: formatTicketRow(inserted.rows[0]) }, { status: 201 });
   } catch {
     return Response.json({ error: "Failed to create ticket" }, { status: 500 });
   }
