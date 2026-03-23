@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { getAdminCookieName } from "@/lib/auth";
+import { getAdminCookieName, getSessionCookieOptions } from '../../../../lib/auth';
 
 export async function POST() {
   const cookieStore = await cookies();
