@@ -4,7 +4,7 @@ import {
   getAdminCookieName,
   getSessionCookieOptions,
   isValidAdminLogin,
-} import ... from '../../../../lib/auth';
+} from '../../../../lib/auth';
 
 export async function POST(req) {
   try {
